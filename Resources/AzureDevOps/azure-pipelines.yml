@@ -1,5 +1,5 @@
 variables:
-    SolutionBaseName: '__SolutionBaseName__'
+    SolutionBaseName: 'DFC.Api.Location'
     BuildPlatform: 'any cpu'
     BuildConfiguration: 'release'
 
