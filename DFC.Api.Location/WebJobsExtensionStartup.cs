@@ -3,7 +3,7 @@ using DFC.Api.Location;
 using DFC.Api.Location.Contracts;
 using DFC.Api.Location.Extensions;
 using DFC.Api.Location.HttpClientPolicies;
-using DFC.Api.Location.Models.HttpClientOptions;
+using DFC.Api.Location.Models.HttpClientConfig;
 using DFC.Api.Location.Services;
 using DFC.Swagger.Standard;
 using Microsoft.Azure.WebJobs;

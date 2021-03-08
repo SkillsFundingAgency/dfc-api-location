@@ -1,5 +1,5 @@
 ﻿using DFC.Api.Location.HttpClientPolicies;
-using DFC.Api.Location.Models.HttpClientOptions;
+using DFC.Api.Location.Models.HttpClientConfig;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;

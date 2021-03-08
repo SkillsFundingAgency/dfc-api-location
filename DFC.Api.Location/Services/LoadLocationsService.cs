@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DFC.Api.Location.Services
@@ -38,7 +37,6 @@ namespace DFC.Api.Location.Services
             //var featureItems = locations.ToList().Select(a => a.Location);
             //WriteCSV(featureItems, @"C:\rawlocations.txt");
             //WriteCSV(cleanedItems.Select(a => a.Location), @"C:\cleanlocations.txt");
-
             return cleanedItems.Count;
         }
 

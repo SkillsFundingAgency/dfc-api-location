@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DFC.Api.Location.Models.HttpClientOptions
+namespace DFC.Api.Location.Models.HttpClientConfig
 {
     public abstract class HttpClientOptions
     {
