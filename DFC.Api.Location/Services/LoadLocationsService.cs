@@ -29,7 +29,7 @@ namespace DFC.Api.Location.Services
 
             logger.LogInformation($"Got data from ONS {locations.Count()} records");
 
-            var cleanedItems = locations.ToList().Where(item => !string.IsNullOrEmpty(item.Location?.LocationName))
+            var cleanedItems = locations.Where(item => !string.IsNullOrEmpty(item.Location?.LocationName))
                     .Where(item => !string.IsNullOrEmpty(item.Location?.LocalAuthorityName))
                     .Where(item => !string.IsNullOrEmpty(item.Location?.LocationAuthorityDistrict))
                     .GroupBy(c => new { c.Location?.LocalAuthorityName, c.Location?.LocationName, c.Location?.LocationAuthorityDistrict })
@@ -40,14 +40,13 @@ namespace DFC.Api.Location.Services
 
             logger.LogInformation($"After data cleaning there are {locations.Count()} records");
 
-
             //var featureItems = locations.ToList().Select(a => a.Location);
             //WriteCSV(featureItems, @"C:\rawlocations.txt");
             //WriteCSV(cleanedItems.Select(a => a.Location), @"C:\cleanlocations.txt");
             return cleanedItems.Count;
         }
 
-        //This is just for debugging will be removed
+        /***** This is just for debugging will be removed
         private static void WriteCSV<T>(IEnumerable<T> items, string path)
         {
             Type itemType = typeof(T);
@@ -64,5 +63,6 @@ namespace DFC.Api.Location.Services
                 }
             }
         }
+        ****/
     }
 }

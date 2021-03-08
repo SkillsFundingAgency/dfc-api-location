@@ -34,7 +34,6 @@ namespace DFC.Api.Location.Functions
 
             logger.LogInformation("Completed loaded locations");
 
-
             return new OkObjectResult($"Loaded {numberLoaded} Locations");
         }
     }
