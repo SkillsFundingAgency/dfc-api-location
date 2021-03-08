@@ -42,6 +42,7 @@ namespace DFC.Api.Location.Services
             return cleanedItems.Count;
         }
 
+        //This is just for debugging will be removed
         private static void WriteCSV<T>(IEnumerable<T> items, string path)
         {
             Type itemType = typeof(T);
