@@ -30,12 +30,18 @@ namespace DFC.Api.Location.Services
 
             while (moreData)
             {
-                var response = await httpClient.GetAsync(new Uri($"{NationalOfficeOfStatisticsLocationUrl}&resultRecordCount={numbertoReturn}&resultOffSet={offSet}")).ConfigureAwait(false);
+                var requestUri = new Uri($"{NationalOfficeOfStatisticsLocationUrl}&resultRecordCount={numbertoReturn}&resultOffSet={offSet}");
+
+                logger.LogInformation($"Making request to {requestUri}");
+
+                var response = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
 
                 response.EnsureSuccessStatusCode();
 
                 var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var locationsReturned = JsonConvert.DeserializeObject<OnsLocationResponse>(jsonResponse);
+
+                logger.LogInformation($"ONS API returned {locationsReturned.Locations?.Count}");
 
                 moreData = locationsReturned.ExceededTransferLimit;
 
@@ -46,6 +52,8 @@ namespace DFC.Api.Location.Services
                     locations.AddRange(locationsReturned.Locations);
                 }
             }
+
+            logger.LogInformation($"Completed getting locations from API");
 
             return locations;
         }

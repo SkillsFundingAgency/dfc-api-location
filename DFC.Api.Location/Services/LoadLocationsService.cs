@@ -23,7 +23,11 @@ namespace DFC.Api.Location.Services
 
         public async Task<int> LoadLocations()
         {
+            logger.LogInformation("Getting data from ONS");
+
             var locations = await nationalStatisticsLocationService.GetLocations().ConfigureAwait(false);
+
+            logger.LogInformation($"Got data from ONS {locations.Count()} records");
 
             var cleanedItems = locations.ToList().Where(item => !string.IsNullOrEmpty(item.Location?.LocationName))
                     .Where(item => !string.IsNullOrEmpty(item.Location?.LocalAuthorityName))
@@ -33,6 +37,9 @@ namespace DFC.Api.Location.Services
                     .GroupBy(c => new { c.Location?.Id })
                     .Select(item => item.FirstOrDefault())
                     .ToList();
+
+            logger.LogInformation($"After data cleaning there are {locations.Count()} records");
+
 
             //var featureItems = locations.ToList().Select(a => a.Location);
             //WriteCSV(featureItems, @"C:\rawlocations.txt");

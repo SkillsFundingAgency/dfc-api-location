@@ -5,37 +5,37 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Threading.Tasks;
 
-public class LocationDataLoad
+namespace DFC.Api.Location.Functions
 {
-    private readonly ILogger<LocationDataLoad> logger;
-    private readonly ILoadLocationsService loadLocationsService;
-
-    public LocationDataLoad(ILogger<LocationDataLoad> logger, ILoadLocationsService loadLocationsService)
+    public class LocationDataLoad
     {
-        this.logger = logger;
-        this.loadLocationsService = loadLocationsService;
-    }
+        private readonly ILogger<LocationDataLoad> logger;
+        private readonly ILoadLocationsService loadLocationsService;
 
-    [FunctionName("LoadLocations")]
-    [Display(Name = "Load location data ", Description = "Get location data from ONS and load in to azure index.")]
-    [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Location data loaded", ShowSchema = false)]
-    [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
-    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
-    {
-        log.LogInformation("C# HTTP trigger function processed a request.");
+        public LocationDataLoad(ILogger<LocationDataLoad> logger, ILoadLocationsService loadLocationsService)
+        {
+            this.logger = logger;
+            this.loadLocationsService = loadLocationsService;
+        }
 
-        var numberLoaded = await loadLocationsService.LoadLocations().ConfigureAwait(false);
+        [FunctionName("LoadLocations")]
+        [Display(Name = "Load location data ", Description = "Get location data from ONS and load in to azure index.")]
+        [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Location data loaded", ShowSchema = false)]
+        [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req)
+        {
+            logger.LogInformation($"Starting loaded locations with {req?.Body}");
 
-        return new OkObjectResult($"Loaded {numberLoaded} Locations");
+            var numberLoaded = await loadLocationsService.LoadLocations().ConfigureAwait(false);
+
+            logger.LogInformation("Completed loaded locations");
+
+
+            return new OkObjectResult($"Loaded {numberLoaded} Locations");
+        }
     }
 }
