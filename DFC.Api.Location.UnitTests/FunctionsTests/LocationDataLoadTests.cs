@@ -22,7 +22,8 @@ namespace DFC.Api.Location.UnitTests.FunctionsTests
         public async Task LocationDataLoadReturnsNumberLoaded()
         {
             //Setup
-            A.CallTo(() => fakeLoadLocationsService.LoadLocations()).Returns(123);
+            var expectedNumber = 123;
+            A.CallTo(() => fakeLoadLocationsService.LoadLocations()).Returns(expectedNumber);
             var function = new LocationDataLoad(fakeLogger, fakeLoadLocationsService);
 
             //Act
@@ -33,7 +34,7 @@ namespace DFC.Api.Location.UnitTests.FunctionsTests
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             okResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
-            okResult.Value.ToString().Should().Contain("123");
+            okResult.Value.ToString().Should().Contain($"Loaded {expectedNumber} Locations");
         }
     }
 }
