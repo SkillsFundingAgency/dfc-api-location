@@ -3,16 +3,12 @@ using DFC.Api.Location.Models.NationalStatisticsLocationApiResponses;
 using DFC.Api.Location.Services;
 using FakeItEasy;
 using FluentAssertions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DFC.Api.Location.UnitTests.FunctionsTests
+namespace DFC.Api.Location.UnitTests.ServicesTests
 {
     [Trait("Category", "Load location service tests")]
     public class LoadLocationServiceTests
@@ -27,7 +23,7 @@ namespace DFC.Api.Location.UnitTests.FunctionsTests
         [InlineData(2, "LN2", "", "LAD2", 1)]
         [InlineData(2, "", "LAN2", "LAD2", 1)]
         [InlineData(1, "LN2", "LAN2", "LAD2", 1)]
-        public async Task LoadLocationsReturnsNumberLoaded(int locationId, string locationName, string localAuthorityName, string locationAuthorityDistrict, int expectedNumberOfLocations)
+        public async Task LoadLocationsCleansData(int locationId, string locationName, string localAuthorityName, string locationAuthorityDistrict, int expectedNumberOfLocations)
         {
             //Setup
             A.CallTo(() => fakeNationalStatisticsLocationService.GetLocations()).Returns(GetTestLocations(locationId, locationName, localAuthorityName, locationAuthorityDistrict));
