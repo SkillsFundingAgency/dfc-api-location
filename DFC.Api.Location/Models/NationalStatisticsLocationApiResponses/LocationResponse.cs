@@ -16,13 +16,13 @@ namespace DFC.Api.Location.Models.NationalStatisticsLocationApiResponses
         [JsonProperty("ctyltnm")]
         public string? LocalAuthorityName { get; set; }
 
+        [JsonProperty("lad15nm")]
+        public string? LocationAuthorityDistrict { get; set; }
+
         [JsonProperty("lat")]
         public double Latitude { get; set; }
 
         [JsonProperty("long")]
         public double Longitude { get; set; }
-
-        [JsonProperty("lad15nm")]
-        public string? LocationAuthorityDistrict { get; set; }
     }
 }

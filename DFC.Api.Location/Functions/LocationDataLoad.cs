@@ -14,23 +14,24 @@ namespace DFC.Api.Location.Functions
     public class LocationDataLoad
     {
         private readonly ILogger<LocationDataLoad> logger;
-        private readonly ILoadLocationsService loadLocationsService;
+        private readonly ILoadLocations loadLocations;
 
-        public LocationDataLoad(ILogger<LocationDataLoad> logger, ILoadLocationsService loadLocationsService)
+        public LocationDataLoad(ILogger<LocationDataLoad> logger, ILoadLocations loadLocations)
         {
             this.logger = logger;
-            this.loadLocationsService = loadLocationsService;
+            this.loadLocations = loadLocations;
         }
 
         [FunctionName("LoadLocations")]
         [Display(Name = "Load location data ", Description = "Get location data from ONS and load in to azure index.")]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Location data loaded", ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req)
+        public async Task<IActionResult>
+            Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req)
         {
             logger.LogInformation($"Starting loaded locations with {req?.Body}");
 
-            var numberLoaded = await loadLocationsService.LoadLocations().ConfigureAwait(false);
+            var numberLoaded = await loadLocations.GetLocationsAndUpdateIndex().ConfigureAwait(false);
 
             logger.LogInformation("Completed loaded locations");
 

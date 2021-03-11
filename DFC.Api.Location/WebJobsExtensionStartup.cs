@@ -3,6 +3,7 @@ using DFC.Api.Location;
 using DFC.Api.Location.Contracts;
 using DFC.Api.Location.Extensions;
 using DFC.Api.Location.HttpClientPolicies;
+using DFC.Api.Location.Models.ConfigSettings;
 using DFC.Api.Location.Models.HttpClientConfig;
 using DFC.Api.Location.Services;
 using DFC.Swagger.Standard;
@@ -22,6 +23,7 @@ namespace DFC.Api.Location
     public class WebJobsExtensionStartup : IWebJobsStartup
     {
         private const string AppSettingsPolicies = "Policies";
+        private const string AzureSearchAppSettings = "Configuration:AzureSearch";
 
         public void Configure(IWebJobsBuilder builder)
         {
@@ -38,11 +40,17 @@ namespace DFC.Api.Location
             var policyOptions = configuration.GetSection(AppSettingsPolicies).Get<PolicyOptions>() ?? new PolicyOptions();
             var policyRegistry = builder.Services.AddPolicyRegistry();
 
+            var azureSearchOptions = configuration.GetSection(AzureSearchAppSettings).Get<AzureSearchIndexConfig>() ?? new AzureSearchIndexConfig();
+
             builder.AddSwashBuckle(Assembly.GetExecutingAssembly());
+            builder.Services.AddAutoMapper(typeof(WebJobsExtensionStartup).Assembly);
             builder.Services.AddApplicationInsightsTelemetry();
             builder.Services.AddTransient<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();
             builder.Services.AddTransient<INationalStatisticsLocationService, NationalStatisticsLocationService>();
-            builder.Services.AddTransient<ILoadLocationsService, LoadLocationsService>();
+            builder.Services.AddTransient<ILoadLocations, LoadLocations>();
+            builder.Services.AddTransient<ILocationsService, LocationsService>();
+            builder.Services.AddTransient<ISearchIndexService, SearchIndexService>();
+            builder.Services.AddSingleton(azureSearchOptions);
 
             builder.Services
                 .AddPolicies(policyRegistry, nameof(OnsHttpClientOptions), policyOptions)
