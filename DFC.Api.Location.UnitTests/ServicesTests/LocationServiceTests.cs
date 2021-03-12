@@ -11,8 +11,8 @@ using Xunit;
 
 namespace DFC.Api.Location.UnitTests.ServicesTests
 {
-    [Trait("Category", "Load location service tests")]
-    public class LoadLocationServiceTests
+    [Trait("Category", "Location service tests")]
+    public class LocationServiceTests
     {
         private readonly ILogger<LocationsService> fakeLogger = A.Fake<ILogger<LocationsService>>();
         private readonly INationalStatisticsLocationService fakeNationalStatisticsLocationService = A.Fake<INationalStatisticsLocationService>();
@@ -27,14 +27,14 @@ namespace DFC.Api.Location.UnitTests.ServicesTests
         public async Task LoadLocationsCleansData(int locationId, string locationName, string localAuthorityName, string locationAuthorityDistrict, int expectedNumberOfLocations)
         {
             //Setup
-            A.CallTo(() => fakeNationalStatisticsLocationService.GetLocations()).Returns(GetTestLocations(locationId, locationName, localAuthorityName, locationAuthorityDistrict));
+            A.CallTo(() => fakeNationalStatisticsLocationService.GetLocationsAsync()).Returns(GetTestLocations(locationId, locationName, localAuthorityName, locationAuthorityDistrict));
             var loadLocationsService = new LocationsService(fakeLogger, fakeNationalStatisticsLocationService);
 
             //Act
-            var result = await loadLocationsService.GetCleanLocations().ConfigureAwait(false);
+            var result = await loadLocationsService.GetCleanLocationsAsync().ConfigureAwait(false);
 
             //Assert
-            A.CallTo(() => fakeNationalStatisticsLocationService.GetLocations()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => fakeNationalStatisticsLocationService.GetLocationsAsync()).MustHaveHappenedOnceExactly();
             result.Count().Should().Be(expectedNumberOfLocations);
         }
 

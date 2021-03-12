@@ -31,7 +31,7 @@ namespace DFC.Api.Location.Functions
         {
             logger.LogInformation($"Starting loaded locations with {req?.Body}");
 
-            var numberLoaded = await loadLocations.GetLocationsAndUpdateIndex().ConfigureAwait(false);
+            var numberLoaded = await loadLocations.GetLocationsAndUpdateIndexAsync().ConfigureAwait(false);
 
             logger.LogInformation("Completed loaded locations");
 

@@ -21,7 +21,7 @@ namespace DFC.Api.Location.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<LocationsResponse>> GetLocations()
+        public async Task<IEnumerable<LocationsResponse>> GetLocationsAsync()
         {
             var moreData = true;
             var locations = new List<LocationsResponse>();

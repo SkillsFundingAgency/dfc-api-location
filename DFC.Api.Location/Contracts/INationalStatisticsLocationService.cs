@@ -8,6 +8,6 @@ namespace DFC.Api.Location.Contracts
 {
     public interface INationalStatisticsLocationService
     {
-        Task<IEnumerable<LocationsResponse>> GetLocations();
+        Task<IEnumerable<LocationsResponse>> GetLocationsAsync();
     }
 }

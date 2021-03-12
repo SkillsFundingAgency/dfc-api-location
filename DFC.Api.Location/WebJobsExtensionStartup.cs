@@ -47,7 +47,7 @@ namespace DFC.Api.Location
             builder.Services.AddApplicationInsightsTelemetry();
             builder.Services.AddTransient<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();
             builder.Services.AddTransient<INationalStatisticsLocationService, NationalStatisticsLocationService>();
-            builder.Services.AddTransient<ILoadLocations, LoadLocations>();
+            builder.Services.AddTransient<ILoadLocations, LoadLocationsService>();
             builder.Services.AddTransient<ILocationsService, LocationsService>();
             builder.Services.AddTransient<ISearchIndexService, SearchIndexService>();
             builder.Services.AddSingleton(azureSearchOptions);

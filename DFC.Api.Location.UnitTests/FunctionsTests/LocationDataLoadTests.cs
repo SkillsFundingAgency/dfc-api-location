@@ -25,14 +25,14 @@ namespace DFC.Api.Location.UnitTests.FunctionsTests
         {
             //Setup
             var expectedNumber = 123;
-            A.CallTo(() => fakeLoadLocations.GetLocationsAndUpdateIndex()).Returns(expectedNumber);
+            A.CallTo(() => fakeLoadLocations.GetLocationsAndUpdateIndexAsync()).Returns(expectedNumber);
             var function = new LocationDataLoad(fakeLogger, fakeLoadLocations);
 
             //Act
             var result = await function.Run(new DefaultHttpRequest(new DefaultHttpContext())).ConfigureAwait(false);
 
             //Assert
-            A.CallTo(() => fakeLoadLocations.GetLocationsAndUpdateIndex()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => fakeLoadLocations.GetLocationsAndUpdateIndexAsync()).MustHaveHappenedOnceExactly();
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             okResult.StatusCode.Should().Be((int)HttpStatusCode.OK);

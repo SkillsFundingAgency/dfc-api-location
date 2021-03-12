@@ -6,6 +6,6 @@ namespace DFC.Api.Location.Contracts
 {
     public interface ISearchIndexService
     {
-        Task<int> BuildIndex(IEnumerable<SearchLocationIndex> searchLocations);
+        Task<int> BuildIndexAsync(IEnumerable<SearchLocationIndex> searchLocations);
     }
 }

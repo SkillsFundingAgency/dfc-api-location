@@ -8,6 +8,6 @@ namespace DFC.Api.Location.Contracts
 {
     public interface ILocationsService
     {
-        Task<IEnumerable<LocationResponse?>> GetCleanLocations();
+        Task<IEnumerable<LocationResponse?>> GetCleanLocationsAsync();
     }
 }

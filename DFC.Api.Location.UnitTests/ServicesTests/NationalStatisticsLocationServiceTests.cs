@@ -40,7 +40,7 @@ namespace DFC.Api.Location.UnitTests.ServicesTests
             var nationalStatisticsLocationService = new NationalStatisticsLocationService(fakeLogger, httpClient);
 
             //Act
-            var actual = await nationalStatisticsLocationService.GetLocations().ConfigureAwait(false);
+            var actual = await nationalStatisticsLocationService.GetLocationsAsync().ConfigureAwait(false);
 
             //Assert
             actual.Should().BeEquivalentTo(expectedResponse.Locations);
@@ -62,6 +62,11 @@ namespace DFC.Api.Location.UnitTests.ServicesTests
                         Location = new LocationResponse
                         {
                             Id = 1,
+                            LocationName = "LN1",
+                            LocalAuthorityName = "LAN1",
+                            LocationAuthorityDistrict = "LAD1",
+                            Longitude = 1,
+                            Latitude = 2,
                         },
                     },
                 },

@@ -29,7 +29,7 @@ namespace DFC.Api.Location.Services
             this.azureSearchIndexConfig = azureSearchIndexConfig;
         }
 
-        public async Task<int> BuildIndex(IEnumerable<SearchLocationIndex> searchLocations)
+        public async Task<int> BuildIndexAsync(IEnumerable<SearchLocationIndex> searchLocations)
         {
             logger.LogInformation($"Starting to build index for {searchLocations.Count()}");
 

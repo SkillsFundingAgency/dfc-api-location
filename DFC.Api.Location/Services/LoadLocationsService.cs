@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace DFC.Api.Location.Services
 {
-    public class LoadLocations : ILoadLocations
+    public class LoadLocationsService : ILoadLocations
     {
-        private readonly ILogger<LocationsService> logger;
+        private readonly ILogger<LoadLocationsService> logger;
 
         private readonly ILocationsService locationsService;
 
@@ -20,7 +20,7 @@ namespace DFC.Api.Location.Services
 
         private readonly IMapper mapper;
 
-        public LoadLocations(ILogger<LocationsService> logger, ILocationsService locationsService, ISearchIndexService searchIndexService, IMapper mapper)
+        public LoadLocationsService(ILogger<LoadLocationsService> logger, ILocationsService locationsService, ISearchIndexService searchIndexService, IMapper mapper)
         {
             this.logger = logger;
             this.locationsService = locationsService;
@@ -28,15 +28,15 @@ namespace DFC.Api.Location.Services
             this.mapper = mapper;
         }
 
-        public async Task<int> GetLocationsAndUpdateIndex()
+        public async Task<int> GetLocationsAndUpdateIndexAsync()
         {
             logger.LogInformation("Starting to get locations and update index");
             try
             {
-                var cleanLocations = await locationsService.GetCleanLocations().ConfigureAwait(false);
+                var cleanLocations = await locationsService.GetCleanLocationsAsync().ConfigureAwait(false);
                 logger.LogInformation($"Got {cleanLocations.Count()} locations");
                 var searchLocations = mapper.Map<IEnumerable<SearchLocationIndex>>(cleanLocations);
-                return await searchIndexService.BuildIndex(searchLocations).ConfigureAwait(false);
+                return await searchIndexService.BuildIndexAsync(searchLocations).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

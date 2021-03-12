@@ -19,11 +19,11 @@ namespace DFC.Api.Location.Services
             this.nationalStatisticsLocationService = nationalStatisticsLocationService;
         }
 
-        public async Task<IEnumerable<LocationResponse?>> GetCleanLocations()
+        public async Task<IEnumerable<LocationResponse?>> GetCleanLocationsAsync()
         {
             logger.LogInformation("Getting data from ONS");
 
-            var locations = await nationalStatisticsLocationService.GetLocations().ConfigureAwait(false);
+            var locations = await nationalStatisticsLocationService.GetLocationsAsync().ConfigureAwait(false);
 
             logger.LogInformation($"Got data from ONS {locations.Count()} records");
 

@@ -7,6 +7,6 @@ namespace DFC.Api.Location.Contracts
 {
     public interface ILoadLocations
     {
-        Task<int> GetLocationsAndUpdateIndex();
+        Task<int> GetLocationsAndUpdateIndexAsync();
     }
 }
