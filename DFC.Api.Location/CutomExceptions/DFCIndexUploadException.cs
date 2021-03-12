@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 
 namespace DFC.Api.Location.CutomExceptions
 {
@@ -18,6 +19,11 @@ namespace DFC.Api.Location.CutomExceptions
 
         public DfcIndexUploadException(string message, Exception ex)
         : base(message, ex)
+        {
+        }
+
+        protected DfcIndexUploadException(SerializationInfo serializationInfo, StreamingContext streamingContext)
+            : base(serializationInfo, streamingContext)
         {
         }
     }
