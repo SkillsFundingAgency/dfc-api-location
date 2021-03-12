@@ -4,6 +4,7 @@ using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using DFC.Api.Location.Contracts;
+using DFC.Api.Location.CutomExceptions;
 using DFC.Api.Location.Models.AzureSearch;
 using DFC.Api.Location.Models.ConfigSettings;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,7 @@ namespace DFC.Api.Location.Services
 
             if (azureSearchIndexConfig.SearchServiceAdminAPIKey == null)
             {
-                throw new NullReferenceException(nameof(azureSearchIndexConfig.SearchServiceAdminAPIKey));
+                throw new DFCNullConfigValueException(nameof(azureSearchIndexConfig.SearchServiceAdminAPIKey));
             }
 
             try
@@ -49,19 +50,19 @@ namespace DFC.Api.Location.Services
                 definition.Suggesters.Add(suggester);
 
                 logger.LogInformation("created search objects and creating index");
-                SearchIndex searchIndex = await searchIndexClient.CreateOrUpdateIndexAsync(definition).ConfigureAwait(false);
+                await searchIndexClient.CreateOrUpdateIndexAsync(definition).ConfigureAwait(false);
                 logger.LogInformation("Created search index and uploading documents");
 
                 var batch = IndexDocumentsBatch.Upload(searchLocations);
                 IndexDocumentsResult result = await searchClient.IndexDocumentsAsync(batch).ConfigureAwait(false);
 
-                var failedRecords = result.Results.Where(r => r.Succeeded != true);
+                var failedRecords = result.Results.Where(r => !r.Succeeded);
                 if (failedRecords.Any())
                 {
                     var sampleFailedRecord = failedRecords.FirstOrDefault();
                     var sampleMessage = $"{failedRecords.Count()} have failed to upload to the index, sample failed record  message {sampleFailedRecord.ErrorMessage}, Status = {sampleFailedRecord.Status}";
                     logger.LogError(sampleMessage);
-                    throw new ApplicationException("sampleMessage");
+                    throw new DFCIndexUploadException("sampleMessage");
                 }
 
                 logger.LogInformation($"Created search index and uploaded {result.Results.Count} documents");
