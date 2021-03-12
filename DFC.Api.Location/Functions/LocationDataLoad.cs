@@ -25,9 +25,8 @@ namespace DFC.Api.Location.Functions
         [FunctionName("LoadLocations")]
         [Display(Name = "Load location data ", Description = "Get location data from ONS and load in to azure index.")]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Location data loaded", ShowSchema = false)]
-        [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = "API key is unknown or invalid", ShowSchema = false)]
         public async Task<IActionResult>
-            Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req)
+            Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
         {
             logger.LogInformation($"Starting loaded locations with {req?.Body}");
 
