@@ -4,18 +4,19 @@ using System.Diagnostics.CodeAnalysis;
 namespace DFC.Api.Location.CutomExceptions
 {
     [ExcludeFromCodeCoverage]
-    public class DFCIndexUploadException : Exception
+    [Serializable]
+    public class DfcIndexUploadException : Exception
     {
-        public DFCIndexUploadException()
+        public DfcIndexUploadException()
         {
         }
 
-        public DFCIndexUploadException(string message)
+        public DfcIndexUploadException(string message)
         : base(message)
         {
         }
 
-        public DFCIndexUploadException(string message, Exception ex)
+        public DfcIndexUploadException(string message, Exception ex)
         : base(message, ex)
         {
         }

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DFC.Api.Location.Models.ConfigSettings
 {
+    [ExcludeFromCodeCoverage]
     public class AzureSearchIndexConfig
     {
         public Uri? EndpointUri { get; set; }

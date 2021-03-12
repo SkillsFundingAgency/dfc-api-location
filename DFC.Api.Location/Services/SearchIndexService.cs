@@ -35,7 +35,7 @@ namespace DFC.Api.Location.Services
 
             if (azureSearchIndexConfig.SearchServiceAdminAPIKey == null)
             {
-                throw new DFCNullConfigValueException(nameof(azureSearchIndexConfig.SearchServiceAdminAPIKey));
+                throw new DfcNullConfigValueException(nameof(azureSearchIndexConfig.SearchServiceAdminAPIKey));
             }
 
             try
@@ -62,7 +62,7 @@ namespace DFC.Api.Location.Services
                     var sampleFailedRecord = failedRecords.FirstOrDefault();
                     var sampleMessage = $"{failedRecords.Count()} have failed to upload to the index, sample failed record  message {sampleFailedRecord.ErrorMessage}, Status = {sampleFailedRecord.Status}";
                     logger.LogError(sampleMessage);
-                    throw new DFCIndexUploadException("sampleMessage");
+                    throw new DfcIndexUploadException("sampleMessage");
                 }
 
                 logger.LogInformation($"Created search index and uploaded {result.Results.Count} documents");

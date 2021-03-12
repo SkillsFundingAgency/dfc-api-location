@@ -1,10 +1,9 @@
 ﻿using Azure.Search.Documents.Indexes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DFC.Api.Location.Models.AzureSearch
 {
+    [ExcludeFromCodeCoverage]
     public partial class SearchLocationIndex
     {
         [SimpleField(IsKey = true, IsFilterable = true)]
