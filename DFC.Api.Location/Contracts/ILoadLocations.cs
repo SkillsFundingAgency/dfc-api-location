@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace DFC.Api.Location.Contracts
 {
-    public interface ILoadLocationsService
+    public interface ILoadLocations
     {
-        Task<int> LoadLocations();
+        Task<int> GetLocationsAndUpdateIndexAsync();
     }
 }

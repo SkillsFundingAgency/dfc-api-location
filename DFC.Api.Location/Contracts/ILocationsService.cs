@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DFC.Api.Location.Contracts
 {
-    public interface INationalStatisticsLocationService
+    public interface ILocationsService
     {
-        Task<IEnumerable<LocationsResponse>> GetLocationsAsync();
+        Task<IEnumerable<LocationResponse?>> GetCleanLocationsAsync();
     }
 }
