@@ -107,11 +107,7 @@
             "value": "[parameters('apimApiName')]"
           }
         }
-      },
-      "dependsOn": [
-        "[parameters('apimProductName')]",
-        "[parameters('apimLoggerName')]"
-        ]
+      }
     },
     {
       "apiVersion": "2017-05-10",
