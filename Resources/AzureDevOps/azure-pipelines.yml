@@ -64,67 +64,67 @@ stages:
                   PublishWebApp: true
                   TestSuffix: UnitTests
 
-          - stage: DeployToDevApiLocation
-            #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
-            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-            displayName: Deploy to DEV_ApiLocation
-            variables:
-            - template: VariableTemplates/DevEnvironmentVariables.yml
-            - group: dfc-shared-dev
-            - group: dfc-app-shared-all
-            - group: dfc-app-shared-dev
-            - group: dfc-compositeui-all
-            - group: 'KeyVault - dfc-dev-shared-kv'
-            jobs:
-            - template: JobTemplates/deploy-environment.yml
-              parameters:
-                AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
-                EnvironmentTag: '$(EnvironmentTag)'
-                ParentBusiness: '$(ParentBusiness)'
-                ServiceOffering: '$(ServiceOffering)'
-                ResourceGroup: '$(ResourceGroup)'
-                PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
-                ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
-                FunctionAppDomain: '$(FunctionAppDomain)'
-                EnvironmentName: DEV_ApiLocation
-                DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
-                ApimLoggerName: "$(ApimLoggerName)"
-                ApimProductName: "$(ApimProductName)"
-                SharedResourceGroup: "$(SharedResourceGroup)"
-                ApimServiceName: "$(ApimServiceName)"
-                ApimApiName: $(ApimApiName)
-                Apis:
-                  -
-                    - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+- stage: DeployToDevApiLocation
+  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  displayName: Deploy to DEV_ApiLocation
+  variables:
+  - template: VariableTemplates/DevEnvironmentVariables.yml
+  - group: dfc-shared-dev
+  - group: dfc-app-shared-all
+  - group: dfc-app-shared-dev
+  - group: dfc-compositeui-all
+  - group: 'KeyVault - dfc-dev-shared-kv'
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      FunctionAppDomain: '$(FunctionAppDomain)'
+      EnvironmentName: DEV_ApiLocation
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      ApimLoggerName: "$(ApimLoggerName)"
+      ApimProductName: "$(ApimProductName)"
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      ApimServiceName: "$(ApimServiceName)"
+      ApimApiName: $(ApimApiName)
+      Apis:
+        -
+          - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
 
-          - stage: DeployToSitApiLocation
-            condition: succeeded()
-            displayName: Deploy to SIT_ApiLocation
-            variables:
-            - template: VariableTemplates/SitEnvironmentVariables.yml
-            - group: dfc-shared-sit
-            - group: dfc-app-shared-all
-            - group: dfc-app-shared-sit
-            - group: dfc-compositeui-all
-            - group: 'KeyVault - dfc-sit-shared-kv'
-            jobs:
-            - template: JobTemplates/deploy-environment.yml
-              parameters:
-                AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
-                EnvironmentTag: '$(EnvironmentTag)'
-                ParentBusiness: '$(ParentBusiness)'
-                ServiceOffering: '$(ServiceOffering)'
-                ResourceGroup: '$(ResourceGroup)'
-                PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
-                ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
-                FunctionAppDomain: '$(FunctionAppDomain)'
-                EnvironmentName: SIT_ApiLocation
-                DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
-                ApimLoggerName: "$(ApimLoggerName)"
-                ApimProductName: "$(ApimProductName)"
-                SharedResourceGroup: "$(SharedResourceGroup)"
-                ApimServiceName: "$(ApimServiceName)"
-                ApimApiName: $(ApimApiName)
-                Apis:
-                  -
-                    - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+- stage: DeployToSitApiLocation
+  condition: succeeded()
+  displayName: Deploy to SIT_ApiLocation
+  variables:
+  - template: VariableTemplates/SitEnvironmentVariables.yml
+  - group: dfc-shared-sit
+  - group: dfc-app-shared-all
+  - group: dfc-app-shared-sit
+  - group: dfc-compositeui-all
+  - group: 'KeyVault - dfc-sit-shared-kv'
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      FunctionAppDomain: '$(FunctionAppDomain)'
+      EnvironmentName: SIT_ApiLocation
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      ApimLoggerName: "$(ApimLoggerName)"
+      ApimProductName: "$(ApimProductName)"
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      ApimServiceName: "$(ApimServiceName)"
+      ApimApiName: $(ApimApiName)
+      Apis:
+        -
+          - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
