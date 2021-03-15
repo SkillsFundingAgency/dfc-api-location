@@ -1,0 +1,72 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appSharedResourceGroup": {
+      "value": "dfc-dev-app-sharedresources-rg"
+    },
+    "appSharedStorageAccountName": {
+      "value": "dfcdevappsharedstr"
+    },
+    "aspInstances": {
+      "value": 2
+    },
+    "aspSize": {
+      "value": "2"
+    },
+    "aspTier": {
+      "value": "Standard"
+    },
+    "aseHostingEnvironmentName": {
+      "value": "__AseServiceName__"
+    },
+    "aseResourceGroup": {
+      "value": "__aseResourceGroup__"
+    },
+    "Environment": {
+      "value": "dev"
+    },
+    "FunctionAppInsightName": {
+      "value": "dfc-dev-funcapp-v1-ai"
+    },
+    "FunctionAppName": {
+      "value": "dfc-dev-funcapp-v1-fa"
+    },
+    "enableAlerts": {
+      "value": false
+    },
+    "ExceptionCountThreshold": {
+      "value": "0"
+    },
+    "MemoryPercentageThreshold": {
+      "value": "0"
+    },
+    "CPUPercentageThreshold": {
+      "value": "0"
+    },
+    "apimLoggerName": {
+      "value": "LMI-logger"
+    },
+    "apimResourceGroup": {
+      "value": "dfc-test-template-rg"
+    },
+    "apimServiceName": {
+      "value": "an-apim-instance"
+    },
+    "apimProductName": {
+      "value": "LMI"
+    },
+    "apimApiName": {
+      "value": "api-name"
+    },
+    "AzureSearchEndpointUri": {
+      "value": "AzureSearchEndpointUri"
+    },
+    "AzureSearchSearchServiceName": {
+      "value": "AzureSearchSearchServiceName"
+    },
+    "AzureSearchSearchServiceAdminAPIKey": {
+      "value": "AzureSearchSearchServiceAdminAPIKey"
+    }
+  }
+}
