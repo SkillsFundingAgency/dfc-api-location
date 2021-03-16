@@ -257,7 +257,7 @@
                 "value": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/IPN_GB_2016/FeatureServer/0/"
               },
               {
-                "name": "OnsHttpClientOptions__BaseAddress",
+                "name": "OnsHttpClientOptions__Timeout",
                 "value": "00:00:30"
               }
             ]
