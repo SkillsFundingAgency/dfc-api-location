@@ -26,8 +26,8 @@ variables:
 - name: appServicePlanName
   value: $(WebAppPrefix)-api-location-asp
 - name: apimLoggerName
-  value: $(ApimLoggerName)
+  value: Location-logger
 - name: apimProductName
-  value: $(ApimProductInstanceName)
+  value: Location
 - name: apimApiName
   value: Location

@@ -60,7 +60,6 @@ stages:
   - group: dfc-shared-dev
   - group: dfc-app-shared-all
   - group: dfc-app-shared-dev
-  - group: dfc-compositeui-all
   - group: 'KeyVault - dfc-dev-shared-kv'
   jobs:
   - template: JobTemplates/deploy-environment.yml
@@ -92,7 +91,6 @@ stages:
   - group: dfc-shared-sit
   - group: dfc-app-shared-all
   - group: dfc-app-shared-sit
-  - group: dfc-compositeui-all
   - group: 'KeyVault - dfc-sit-shared-kv'
   jobs:
   - template: JobTemplates/deploy-environment.yml

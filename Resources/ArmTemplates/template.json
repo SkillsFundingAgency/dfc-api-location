@@ -83,6 +83,51 @@
   },
   "resources": [
     {
+      "name": "[parameters('apimLoggerName')]",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('apimResourceGroup')]",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('BuildingBlocksDfcBaseUrl'), 'APIM/apim-logger.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "apimServiceName": {
+            "value": "[parameters('apimServiceName')]"
+          },
+          "productDisplayName": {
+            "value": "[parameters('apimProductName')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[parameters('apimProductName')]",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('apimResourceGroup')]",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('BuildingBlocksDfcBaseUrl'), 'APIM/apim-product.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "allowAnonymousAccess": {
+            "value": false
+          },
+          "apimServiceName": {
+            "value": "[parameters('apimServiceName')]"
+          },
+          "productDisplayName": {
+            "value": "[parameters('apimProductName')]"
+          }
+        }
+      }
+    },
+    {
       "name": "[parameters('apimApiName')]",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('apimResourceGroup')]",
@@ -107,7 +152,11 @@
             "value": "[parameters('apimApiName')]"
           }
         }
-      }
+      },
+      "dependsOn": [
+        "[parameters('apimProductName')]",
+        "[parameters('apimLoggerName')]"
+        ]
     },
     {
       "apiVersion": "2017-05-10",
@@ -273,9 +322,7 @@
       "apiVersion": "2019-05-01",
       "name": "[concat(parameters('FunctionAppInsightName'), '-metric-exceptions')]",
       "type": "Microsoft.Resources/deployments",
-      "dependsOn": [
-        "[parameters('FunctionAppInsightName')]"
-      ],
+      "dependsOn": ["[parameters('FunctionAppInsightName')]"],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -326,9 +373,7 @@
       "apiVersion": "2019-05-01",
       "name": "[concat(parameters('FunctionAppInsightName'), '-failure-anomaly-v2')]",
       "type": "Microsoft.Resources/deployments",
-      "dependsOn": [
-        "[parameters('FunctionAppInsightName')]"
-      ],
+      "dependsOn": ["[parameters('FunctionAppInsightName')]"],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -400,9 +445,7 @@
           }
         }
       },
-      "dependsOn": [
-        "[variables('AppServicePlanName')]"
-      ]
+      "dependsOn": ["[variables('AppServicePlanName')]"]
     },
     {
       "apiVersion": "2019-05-01",
@@ -453,9 +496,7 @@
           }
         }
       },
-      "dependsOn": [
-        "[variables('AppServicePlanName')]"
-      ]
+      "dependsOn": ["[variables('AppServicePlanName')]"]
     }
   ],
   "outputs": {}
