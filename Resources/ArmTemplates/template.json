@@ -83,7 +83,7 @@
   },
   "resources": [
     {
-      "name": "[parameters('apimLoggerName')]",
+      "name": "[concat('apim-logger-', parameters('apimLoggerName'))]",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('apimResourceGroup')]",
       "apiVersion": "2017-05-10",
@@ -104,7 +104,7 @@
       }
     },
     {
-      "name": "[parameters('apimProductName')]",
+      "name": "[concat('apim-product-', parameters('apimProductName'))]",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('apimResourceGroup')]",
       "apiVersion": "2017-05-10",
@@ -128,7 +128,7 @@
       }
     },
     {
-      "name": "[parameters('apimApiName')]",
+      "name": "[concat('apim-api-', parameters('apimApiName'))]",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('apimResourceGroup')]",
       "apiVersion": "2017-05-10",
@@ -154,8 +154,8 @@
         }
       },
       "dependsOn": [
-        "[parameters('apimProductName')]",
-        "[parameters('apimLoggerName')]"
+        "[concat('apim-product-', parameters('apimProductName'))]",
+        "[concat('apim-logger-', parameters('apimLoggerName'))]"
         ]
     },
     {
