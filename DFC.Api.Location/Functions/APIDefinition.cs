@@ -44,7 +44,7 @@ namespace DFC.Api.Location.Functions
         public async Task<IActionResult> SwaggerJson([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = SwaggerJsonRoute)] HttpRequest request)
         {
             var apiSuffix = Environment.GetEnvironmentVariable("ApiSuffix");
-            var apiTitle = "App Registry API " + apiSuffix;
+            var apiTitle = "App Location API " + apiSuffix;
             var swaggerDoc = await Task.FromResult(swaggerDocumentGenerator.GenerateSwaggerDocument(
                 request,
                 apiTitle,

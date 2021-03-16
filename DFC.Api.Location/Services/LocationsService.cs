@@ -1,4 +1,5 @@
 ﻿using DFC.Api.Location.Contracts;
+using DFC.Api.Location.Models.AzureSearch;
 using DFC.Api.Location.Models.NationalStatisticsLocationApiResponses;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;

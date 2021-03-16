@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DFC.Api.Location.Models.APIModels;
 using DFC.Api.Location.Models.AzureSearch;
 using DFC.Api.Location.Models.NationalStatisticsLocationApiResponses;
 using System.Diagnostics.CodeAnalysis;
@@ -12,6 +13,8 @@ namespace DFC.Api.Location.AutoMapperProfiles
         {
             CreateMap<LocationResponse, SearchLocationIndex>()
                 .ForMember(d => d.LocationId, s => s.MapFrom(s => s.Id));
+
+            CreateMap<SearchLocationIndex, SuggestedLocations>();
         }
     }
 }
