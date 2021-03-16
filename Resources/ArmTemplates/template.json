@@ -78,6 +78,7 @@
     "resourcePrefix": "[tolower(concat('dfc-', parameters('Environment'), '-api-location'))]",
     "appServicePlanName": "[concat(variables('resourcePrefix'), '-asp')]",
     "appServicePlanResourceGroup": "[concat(variables('resourcePrefix'),'-rg')]",
+    "apimApiName": "[concat(parameters('apimProductName'), '-', parameters('apimApiName'))]",
     "buildingBlocksDfcBaseUrl": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
     "ActionGroupName": "[concat('dfc-', replace(tolower(parameters('Environment')), '-draft', ''), '-app-sharedresources-actgrp')]"
   },
@@ -128,7 +129,7 @@
       }
     },
     {
-      "name": "[concat('apim-api-', parameters('apimApiName'))]",
+      "name": "[concat('apim-api-', variables('apimApiName'))]",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('apimResourceGroup')]",
       "apiVersion": "2017-05-10",
@@ -149,7 +150,7 @@
             "value": "[parameters('apimServiceName')]"
           },
           "apiName": {
-            "value": "[parameters('apimApiName')]"
+            "value": "[variables('apimApiName')]"
           }
         }
       },
