@@ -40,7 +40,7 @@ namespace DFC.Api.Location.Services
                 var fieldBuilder = new FieldBuilder();
                 var searchFields = fieldBuilder.Build(typeof(SearchLocationIndex));
                 var definition = new SearchIndex(azureSearchIndexConfig.LocationSearchIndex, searchFields);
-                var suggester = new SearchSuggester(suggestorName, new[] { nameof(SearchLocationIndex.LocationName), nameof(SearchLocationIndex.LocationAuthorityDistrict) });
+                var suggester = new SearchSuggester(suggestorName, new[] { nameof(SearchLocationIndex.LocationName) });
                 definition.Suggesters.Add(suggester);
 
                 logger.LogInformation("created search objects and creating index");
@@ -78,7 +78,7 @@ namespace DFC.Api.Location.Services
             {
                 var suggestOptions = new SuggestOptions()
                 {
-                    Size = 5,
+                    Size = 20,
                 };
 
                 suggestOptions.Select.Add(nameof(SearchLocationIndex.LocationId));
