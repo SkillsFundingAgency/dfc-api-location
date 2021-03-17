@@ -1,4 +1,5 @@
-﻿using DFC.Api.Location.Models.NationalStatisticsLocationApiResponses;
+﻿using DFC.Api.Location.Models.AzureSearch;
+using DFC.Api.Location.Models.NationalStatisticsLocationApiResponses;
 using System;
 using System.Collections.Generic;
 using System.Text;

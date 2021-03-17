@@ -26,7 +26,7 @@ namespace DFC.Api.Location.Functions
         [Display(Name = "Load location data ", Description = "Get location data from ONS and load in to azure index.")]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Location data loaded", ShowSchema = false)]
         public async Task<IActionResult>
-            Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
+            Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "loadlocations")] HttpRequest req)
         {
             logger.LogInformation($"Starting loaded locations with {req?.Body}");
 

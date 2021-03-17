@@ -22,6 +22,7 @@ namespace DFC.Api.Location.Services
     {
         private readonly ILogger<NationalStatisticsLocationService> logger;
         private readonly AzureSearchIndexConfig azureSearchIndexConfig;
+        private readonly string suggestorName = "sglocation";
 
         public SearchIndexService(ILogger<NationalStatisticsLocationService> logger, AzureSearchIndexConfig azureSearchIndexConfig)
         {
@@ -32,21 +33,14 @@ namespace DFC.Api.Location.Services
         public async Task<int> BuildIndexAsync(IEnumerable<SearchLocationIndex> searchLocations)
         {
             logger.LogInformation($"Starting to build index for {searchLocations.Count()}");
-
-            if (azureSearchIndexConfig.SearchServiceAdminAPIKey == null)
-            {
-                throw new DfcNullConfigValueException(nameof(azureSearchIndexConfig.SearchServiceAdminAPIKey));
-            }
-
             try
             {
-                AzureKeyCredential credential = new AzureKeyCredential(azureSearchIndexConfig.SearchServiceAdminAPIKey);
-                var searchIndexClient = new SearchIndexClient(azureSearchIndexConfig.EndpointUri, credential);
-                var searchClient = new SearchClient(azureSearchIndexConfig.EndpointUri, azureSearchIndexConfig.LocationSearchIndex, credential);
+                var searchIndexClient = new SearchIndexClient(azureSearchIndexConfig.EndpointUri, GetAzureKeyCredential());
+                var searchClient = new SearchClient(azureSearchIndexConfig.EndpointUri, azureSearchIndexConfig.LocationSearchIndex, GetAzureKeyCredential());
                 var fieldBuilder = new FieldBuilder();
                 var searchFields = fieldBuilder.Build(typeof(SearchLocationIndex));
                 var definition = new SearchIndex(azureSearchIndexConfig.LocationSearchIndex, searchFields);
-                var suggester = new SearchSuggester("sg", new[] { "LocationName", "LocationAuthorityDistrict" });
+                var suggester = new SearchSuggester(suggestorName, new[] { nameof(SearchLocationIndex.LocationName) });
                 definition.Suggesters.Add(suggester);
 
                 logger.LogInformation("created search objects and creating index");
@@ -74,6 +68,46 @@ namespace DFC.Api.Location.Services
                 logger.LogError("Building index had an error", ex);
                 throw;
             }
+        }
+
+        public async Task<IEnumerable<SearchLocationIndex>> SuggestAsync(string term)
+        {
+            logger.LogInformation($"Starting to get suggestions for {term}");
+            try
+            {
+                var suggestOptions = new SuggestOptions()
+                {
+                    Size = 20,
+                };
+
+                suggestOptions.Select.Add(nameof(SearchLocationIndex.LocationId));
+                suggestOptions.Select.Add(nameof(SearchLocationIndex.LocationName));
+                suggestOptions.Select.Add(nameof(SearchLocationIndex.LocationAuthorityDistrict));
+                suggestOptions.Select.Add(nameof(SearchLocationIndex.LocalAuthorityName));
+                suggestOptions.Select.Add(nameof(SearchLocationIndex.Longitude));
+                suggestOptions.Select.Add(nameof(SearchLocationIndex.Latitude));
+
+                var searchClient = new SearchClient(azureSearchIndexConfig.EndpointUri, azureSearchIndexConfig.LocationSearchIndex, GetAzureKeyCredential());
+
+                var suggestResults = await searchClient.SuggestAsync<SearchLocationIndex>(term, suggestorName, suggestOptions)
+                  .ConfigureAwait(false);
+                return suggestResults.Value.Results.Select(i => i.Document);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("Getting suggestions had an error", ex);
+                throw;
+            }
+        }
+
+        private AzureKeyCredential GetAzureKeyCredential()
+        {
+            if (azureSearchIndexConfig.SearchServiceAdminAPIKey == null)
+            {
+                throw new DfcNullConfigValueException(nameof(azureSearchIndexConfig.SearchServiceAdminAPIKey));
+            }
+
+            return new AzureKeyCredential(azureSearchIndexConfig.SearchServiceAdminAPIKey);
         }
     }
 }
