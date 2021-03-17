@@ -72,7 +72,6 @@ namespace DFC.Api.Location.Services
 
         public async Task<IEnumerable<SearchLocationIndex>> SuggestAsync(string term)
         {
-
             logger.LogInformation($"Starting to get suggestions for {term}");
             try
             {

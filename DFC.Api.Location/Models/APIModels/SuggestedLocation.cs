@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DFC.Api.Location.Models.APIModels
 {
-    public class SuggestedLocations
+    public class SuggestedLocation
     {
         [Example(Description = "Location Id")]
         public string? LocationId { get; set; }

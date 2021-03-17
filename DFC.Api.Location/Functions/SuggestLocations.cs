@@ -35,7 +35,7 @@ namespace DFC.Api.Location.Functions
                 logger.LogInformation($"Starting suggest locations with term {term} {req?.Body}");
 
                 var locationResults = await searchIndexService.SuggestAsync(term).ConfigureAwait(false);
-                var suggestedLocations = mapper.Map<IEnumerable<SuggestedLocations>>(locationResults);
+                var suggestedLocations = mapper.Map<IEnumerable<SuggestedLocation>>(locationResults);
 
                 logger.LogInformation("Completed suggest locations");
 

@@ -14,7 +14,7 @@ namespace DFC.Api.Location.AutoMapperProfiles
             CreateMap<LocationResponse, SearchLocationIndex>()
                 .ForMember(d => d.LocationId, s => s.MapFrom(s => s.Id));
 
-            CreateMap<SearchLocationIndex, SuggestedLocations>();
+            CreateMap<SearchLocationIndex, SuggestedLocation>();
         }
     }
 }
