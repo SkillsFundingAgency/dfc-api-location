@@ -30,7 +30,7 @@ namespace DFC.Api.Location.Functions
             [FunctionName("SuggestLocations")]
             [Display(Name = "Suggest Locations", Description = "Suggest matching location for a given term")]
             [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = "Suggestions returned", ShowSchema = false)]
-            public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "suggestlocations/{term}")] HttpRequest req, string term)
+            public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "suggestlocations/{term}")] HttpRequest req, string term)
             {
                 logger.LogInformation($"Starting suggest locations with term {term} {req?.Body}");
 
