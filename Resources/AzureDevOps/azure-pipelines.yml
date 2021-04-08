@@ -113,3 +113,35 @@ stages:
       Apis:
         -
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+
+- stage: DeployToPPApiLocation
+  condition: succeeded()
+  displayName: Deploy to PP_ApiLocation
+  variables:
+  - template: VariableTemplates/PPEnvironmentVariables.yml
+  - group: dfc-shared-pp
+  - group: dfc-app-shared-all
+  - group: dfc-app-shared-pp
+  - group: 'KeyVault - dfc-pp-shared-kv'
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      FunctionAppDomain: '$(FunctionAppDomain)'
+      EnvironmentName: PP_ApiLocation
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      ApimLoggerName: "$(ApimLoggerName)"
+      ApimProductName: "$(ApimProductName)"
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      ApimServiceName: "$(ApimServiceName)"
+      ApimApiName: $(ApimApiName)
+      Apis:
+        -
+          - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+
