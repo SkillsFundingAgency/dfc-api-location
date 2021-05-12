@@ -121,11 +121,11 @@ stages:
   condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: Deploy to PP_ApiLocation
   variables:
-  - template: VariableTemplates/PPEnvironmentVariables.yml
   - group: dfc-shared-pp
   - group: dfc-app-shared-all
   - group: dfc-app-shared-pp
   - group: 'KeyVault - dfc-pp-shared-kv'
+  - template: VariableTemplates/PPEnvironmentVariables.yml
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -152,11 +152,11 @@ stages:
   condition: and(eq(dependencies.DeployToPPApiLocation.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: Deploy to PRD_ApiLocation
   variables:
-  - template: VariableTemplates/PRDEnvironmentVariables.yml
   - group: dfc-shared-prd
   - group: dfc-app-shared-all
   - group: dfc-app-shared-prd
   - group: 'KeyVault - dfc-prd-shared-kv'
+  - template: VariableTemplates/PRDEnvironmentVariables.yml
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
