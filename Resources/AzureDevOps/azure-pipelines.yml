@@ -55,7 +55,7 @@ stages:
         TestSuffix: UnitTests
 
 - stage: DeployToDevApiLocation
-  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/dev'), eq(variables['Build.SourceBranch'], 'refs/heads/feature/dotnet6')))
+  condition: succeeded()
   displayName: Deploy to DEV_ApiLocation
   variables:
   - template: VariableTemplates/DevEnvironmentVariables.yml
@@ -117,7 +117,7 @@ stages:
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
 
 - stage: DeployToPPApiLocation
-  condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded()
   displayName: Deploy to PP_ApiLocation
   variables:
   - template: VariableTemplates/PPEnvironmentVariables.yml
@@ -148,7 +148,7 @@ stages:
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
 
 - stage: DeployToPRDApiLocation
-  condition: and(eq(dependencies.DeployToPPApiLocation.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded()
   displayName: Deploy to PRD_ApiLocation
   variables:
   - template: VariableTemplates/PRDEnvironmentVariables.yml
