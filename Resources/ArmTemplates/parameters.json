@@ -70,6 +70,9 @@
     },
     "AzureSearchSearchServiceAdminAPIKey": {
       "value": "__AzureSearchServiceAdminKey__"
+    },
+    "appInsightsInstrumentationKey": {
+      "value": "__appInsightsInstrumentationKey__" 
     }
   }
 }
