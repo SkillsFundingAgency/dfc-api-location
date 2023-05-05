@@ -45,8 +45,6 @@ jobs:
 - deployment: DeploySearchIndex
   displayName: "Deploy Search Index"
   environment: ${{ parameters.EnvironmentName }}
-  dependsOn: 
-  - DeployTemplate
   strategy:
     runOnce:
       deploy:
