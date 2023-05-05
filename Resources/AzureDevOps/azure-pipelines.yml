@@ -56,7 +56,6 @@ stages:
         TestSuffix: UnitTests
 
 - stage: DeployToDevApiLocation
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: Deploy to DEV_ApiLocation
   variables:
   - template: VariableTemplates/DevEnvironmentVariables.yml
