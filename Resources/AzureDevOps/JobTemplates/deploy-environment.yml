@@ -63,6 +63,8 @@ jobs:
                 APIMProductName: '${{ parameters.ApimProductName }}'
                 APIMApiName: '${{ parameters.ApimApiName }}'
 
+
+
 - deployment: CreateIndex
   displayName: "Create search index"
   environment: ${{ parameters.EnvironmentName }}
@@ -70,7 +72,7 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - template: ../StepTemplates/deploy-searchindex.yml
+        - template: /AzureDevOpsTemplates/Deploy/StepTemplates/dfc-searchindex-deploy.yml@dfc-devops
           parameters: 
             AzureSubscription: '${{ parameters.AzureSubscription }}'
             IndexFile: '${{ parameters.IndexFile }}'
