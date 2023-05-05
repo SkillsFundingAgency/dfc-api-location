@@ -18,7 +18,6 @@ parameters:
   ApimProductName: ''
   ApimApiName: ''
   Apis: []
-  JsonFolder: ''
 
 jobs:
 - deployment: DeployTemplate
@@ -62,20 +61,3 @@ jobs:
                 ApimServiceName: '${{ parameters.ApimServiceName }}'
                 APIMProductName: '${{ parameters.ApimProductName }}'
                 APIMApiName: '${{ parameters.ApimApiName }}'
-
-
-
-- deployment: CreateIndex
-  displayName: "Create search index"
-  environment: ${{ parameters.EnvironmentName }}
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - template: /AzureDevOpsTemplates/Deploy/StepTemplates/dfc-searchindex-deploy.yml@dfc-devops
-          parameters: 
-            AzureSubscription: '${{ parameters.AzureSubscription }}'
-            IndexFile: '${{ parameters.IndexFile }}'
-            SearchName: '${{ parameters.SearchName }}'
-            SearchResourceGroupName: '${{ parameters.SearchResourceGroupName }}'
-            Location: '${{ parameters.Location }}'
