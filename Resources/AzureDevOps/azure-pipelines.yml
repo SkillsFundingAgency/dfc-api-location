@@ -54,15 +54,15 @@ stages:
         DotNetCoreVersion: '3.1.100'
         PublishWebApp: true
         TestSuffix: UnitTests
-
+    
 - stage: DeployToDevApiLocation
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: Deploy to DEV_ApiLocation
   variables:
   - template: VariableTemplates/DevEnvironmentVariables.yml
   - group: dfc-shared-dev
   - group: dfc-app-shared-all
   - group: dfc-app-shared-dev
-  - group: dfc-api-location
   - group: 'KeyVault - dfc-dev-shared-kv'
   jobs:
   - template: JobTemplates/deploy-environment.yml
@@ -85,7 +85,7 @@ stages:
       Apis:
         -
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
-  - job: DeployDevSearch
+    step: 
     - template: /AzureDevOpsTemplates/Deploy/StepTemplates/dfc-searchindex-deploy.yml@dfc-devops
       parameters: 
         AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
