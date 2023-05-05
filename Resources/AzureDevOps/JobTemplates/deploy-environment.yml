@@ -53,7 +53,7 @@ jobs:
         steps:
         - template: /AzureDevOpsTemplates/Deploy/StepTemplates/dfc-searchindex-deploy.yml@dfc-devops
           parameters: 
-            AzureSubscription: '{{ parameters.AzureSubscription }}'
+            AzureSubscription: '${{ parameters.AzureSubscription }}'
             IndexFile: '${{ parameters.IndexFile }}'
             SearchName: '${{ parameters.AzureSearchServiceName }}'
             SearchResourceGroupName: '${{ parameters.AzureSearchServiceResourceGroup }}'
