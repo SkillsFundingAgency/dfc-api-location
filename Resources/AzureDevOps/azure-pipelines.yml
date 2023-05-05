@@ -63,6 +63,7 @@ stages:
   - group: dfc-shared-dev
   - group: dfc-app-shared-all
   - group: dfc-app-shared-dev
+  - group: dfc-api-location
   - group: 'KeyVault - dfc-dev-shared-kv'
   jobs:
   - template: JobTemplates/deploy-environment.yml
