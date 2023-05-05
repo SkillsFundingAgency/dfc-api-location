@@ -18,6 +18,9 @@ parameters:
   ApimProductName: ''
   ApimApiName: ''
   Apis: []
+  IndexFile: ''
+  SearchName: ''
+  SearchResourceGroupName: ''
 
 jobs:
 - deployment: DeployTemplate
@@ -38,6 +41,23 @@ jobs:
             Location: '${{ parameters.Location }}'
             ArmOutputVariableName: '${{ parameters.ArmOutputVariableName }}'
             ArmTemplateFolder: '${{ parameters.ArmTemplateFolder }}'
+
+- deployment: DeploySearchIndex
+  displayName: "Deploy Search Index"
+  environment: ${{ parameters.EnvironmentName }}
+  dependsOn: 
+  - DeployTemplate
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - template: /AzureDevOpsTemplates/Deploy/StepTemplates/dfc-searchindex-deploy.yml@dfc-devops
+          parameters: 
+            AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+            IndexFile: '$(IndexFile)'
+            SearchName: '$(AzureSearchServiceName)'
+            SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
+            Location: '$(Location)'
 
 - ${{ each apiPartition in parameters.Apis }}:
   - ${{ each api in apiPartition }}:

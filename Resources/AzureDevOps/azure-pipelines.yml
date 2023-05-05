@@ -85,14 +85,9 @@ stages:
       Apis:
         -
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
-    step: 
-    - template: /AzureDevOpsTemplates/Deploy/StepTemplates/dfc-searchindex-deploy.yml@dfc-devops
-      parameters: 
-        AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
-        IndexFile: '$(IndexFile)'
-        SearchName: '$(AzureSearchServiceName)'
-        SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
-        Location: '$(Location)'
+      IndexFile: '$(IndexFile)'
+      SearchName: '$(AzureSearchServiceName)'
+      SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
 - stage: DeployToSitApiLocation
   condition: succeeded()
