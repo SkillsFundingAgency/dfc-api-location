@@ -63,6 +63,7 @@ stages:
   - group: dfc-shared-dev
   - group: dfc-app-shared-all
   - group: dfc-app-shared-dev
+  - group: dfc-api-locations
   - group: 'KeyVault - dfc-dev-shared-kv'
   jobs:
   - template: JobTemplates/deploy-environment.yml
@@ -85,6 +86,10 @@ stages:
       Apis:
         -
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+      IndexFile: '$(IndexFile)'
+      ScriptPath: '$(ScriptPath)'
+      SearchName: '$(AzureSearchServiceName)'
+      SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
 - stage: DeployToSitApiLocation
   condition: succeeded()

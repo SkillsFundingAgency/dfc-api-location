@@ -18,6 +18,7 @@ parameters:
   ApimProductName: ''
   ApimApiName: ''
   Apis: []
+  JsonFolder: ''
 
 jobs:
 - deployment: DeployTemplate
@@ -61,3 +62,19 @@ jobs:
                 ApimServiceName: '${{ parameters.ApimServiceName }}'
                 APIMProductName: '${{ parameters.ApimProductName }}'
                 APIMApiName: '${{ parameters.ApimApiName }}'
+
+- deployment: CreateIndex
+  displayName: "Create search index"
+  environment: ${{ parameters.EnvironmentName }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - template: ../StepTemplates/deploy-searchindex.yml
+          parameters: 
+            AzureSubscription: '${{ parameters.AzureSubscription }}'
+            IndexFile: '${{ parameters.IndexFile }}'
+            ScriptPath: '${{ parameters.ScriptPath }}'
+            SearchName: '${{ parameters.SearchName }}'
+            SearchResourceGroupName: '${{ parameters.SearchResourceGroupName }}'
+            Location: '${{ parameters.Location }}'
