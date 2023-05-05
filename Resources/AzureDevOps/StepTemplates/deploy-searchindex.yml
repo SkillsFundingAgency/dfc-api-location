@@ -12,6 +12,6 @@ steps:
   condition: and(succeeded(), ne(variables.IndexFile, ''))
   inputs:
     AzureSubscription: '${{ parameters.AzureSubscription }}'
-    ScriptPath: '${{ parameters.ScriptPath }}/Set-SearchIndexes.ps1'
+    ScriptPath: '${{ variables['System.DefaultWorkingDirectory'] }}/PSScripts/Set-SearchIndexes.ps1'
     ScriptArguments: '-SearchName ${{ parameters.SearchName }} -ResourceGroupName ${{ parameters.SearchResourceGroupName }} -IndexFilePath "${{ parameters.IndexFile }}"'
     azurePowerShellVersion: LatestVersion

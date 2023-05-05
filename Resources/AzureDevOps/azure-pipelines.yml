@@ -86,7 +86,6 @@ stages:
         -
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
       IndexFile: '$(IndexFile)'
-      ScriptPath: '/PSScripts/'
       SearchName: '$(AzureSearchServiceName)'
       SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 

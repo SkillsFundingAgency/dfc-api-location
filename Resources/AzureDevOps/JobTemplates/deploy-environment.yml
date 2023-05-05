@@ -74,7 +74,6 @@ jobs:
           parameters: 
             AzureSubscription: '${{ parameters.AzureSubscription }}'
             IndexFile: '${{ parameters.IndexFile }}'
-            ScriptPath: '${{ parameters.ScriptPath }}'
             SearchName: '${{ parameters.SearchName }}'
             SearchResourceGroupName: '${{ parameters.SearchResourceGroupName }}'
             Location: '${{ parameters.Location }}'
