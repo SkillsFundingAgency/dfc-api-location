@@ -44,7 +44,7 @@ stages:
         SolutionBaseName: '${{ variables.SolutionBaseName }}'
 
   - job: BuildTestAndAnalyze
-    displayName: "Build and test application"
+    
     steps:
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
       parameters:
@@ -66,6 +66,7 @@ stages:
   - group: 'KeyVault - dfc-dev-shared-kv'
   jobs:
   - job: DeployDevEnvironment
+    steps:
     - template: JobTemplates/deploy-environment.yml
       parameters:
         AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
@@ -87,6 +88,7 @@ stages:
           -
             - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
   - job: DeployDevSearchIndex
+    steps:
     - template: /AzureDevOpsTemplates/Deploy/StepTemplates/dfc-searchindex-deploy.yml@dfc-devops
       parameters: 
         AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
