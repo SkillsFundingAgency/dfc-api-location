@@ -83,12 +83,12 @@ stages:
       SharedResourceGroup: "$(SharedResourceGroup)"
       ApimServiceName: "$(ApimServiceName)"
       ApimApiName: $(ApimApiName)
-      Apis:
-        -
-          - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
       IndexFile: '$(IndexFile)'
       SearchName: '$(AzureSearchServiceName)'
       SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
+      Apis:
+        -
+          - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
 
 - stage: DeployToSitApiLocation
   condition: succeeded()
