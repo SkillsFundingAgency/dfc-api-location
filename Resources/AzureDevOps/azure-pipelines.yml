@@ -95,7 +95,7 @@ stages:
       Apis:
         -
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
-      SearchSubscription: '$(AzureSearchSubscription)'
+      SearchSubscription: 'Operations Support (fa36a013-6437-49f7-b274-b1e72970de7a)'
       IndexFile: "$(Pipeline.Workspace)/$(SolutionBaseName).Resources.AzureSearch/$(IndexFile)"
       SearchName: '$(AzureSearchServiceName)'
       SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
