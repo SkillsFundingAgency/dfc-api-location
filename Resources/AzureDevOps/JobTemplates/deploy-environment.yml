@@ -49,7 +49,6 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - checkout: dfc-devops
         - template: /AzureDevOpsTemplates/Deploy/StepTemplates/dfc-searchindex-deploy.yml@dfc-devops
           parameters: 
             AzureSubscription: '${{ parameters.AzureSubscription }}'
