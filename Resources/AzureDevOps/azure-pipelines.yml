@@ -42,10 +42,14 @@ stages:
       parameters:
         ArmTemplateRoot: '${{ variables.ArmTemplateRoot }}'
         SolutionBaseName: '${{ variables.SolutionBaseName }}'
+
+- job: PackageSearchIndex
+    displayName: "Package Search Index"
+    steps:
     - task: PublishBuildArtifacts@1
       displayName: Publish AzureSearch files
       inputs:
-        pathtoPublish: '$(SolutionBaseName)/Resources/AzureSearch'
+        pathtoPublish: 'Resources/AzureSearch'
         artifactName: '$(SolutionBaseName).Resources.AzureSearch'
 
   - job: BuildTestAndAnalyze
@@ -59,8 +63,6 @@ stages:
         DotNetCoreVersion: '3.1.100'
         PublishWebApp: true
         TestSuffix: UnitTests
-
-
     
 - stage: DeployToDevApiLocation
   # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
