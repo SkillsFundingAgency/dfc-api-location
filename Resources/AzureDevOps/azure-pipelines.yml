@@ -108,6 +108,7 @@ stages:
   - group: dfc-shared-sit
   - group: dfc-app-shared-all
   - group: dfc-app-shared-sit
+  - group: dfc-api-location
   - group: 'KeyVault - dfc-sit-shared-kv'
   jobs:
   - template: JobTemplates/deploy-environment.yml
@@ -130,6 +131,10 @@ stages:
       Apis:
         -
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+      AzureSearchSubscription: '$(AzureSearchSubscription)'
+      IndexFile: "$(Pipeline.Workspace)/$(SolutionBaseName).Resources.AzureSearch/$(IndexFile)"
+      SearchName: '$(AzureSearchServiceName)'
+      SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
 - stage: DeployToPPApiLocation
   condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
@@ -138,6 +143,7 @@ stages:
   - group: dfc-shared-pp
   - group: dfc-app-shared-all
   - group: dfc-app-shared-pp
+  - group: dfc-api-location
   - group: 'KeyVault - dfc-pp-shared-kv'
   - template: VariableTemplates/PPEnvironmentVariables.yml
   jobs:
@@ -161,6 +167,10 @@ stages:
       Apis:
         -
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+      AzureSearchSubscription: '$(AzureSubscription)'
+      IndexFile: "$(Pipeline.Workspace)/$(SolutionBaseName).Resources.AzureSearch/$(IndexFile)"
+      SearchName: '$(AzureSearchServiceName)'
+      SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
 - stage: DeployToPRDApiLocation
   condition: and(eq(dependencies.DeployToPPApiLocation.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
@@ -169,6 +179,7 @@ stages:
   - group: dfc-shared-prd
   - group: dfc-app-shared-all
   - group: dfc-app-shared-prd
+  - group: dfc-api-location
   - group: 'KeyVault - dfc-prd-shared-kv'
   - template: VariableTemplates/PRDEnvironmentVariables.yml
   jobs:
@@ -192,3 +203,8 @@ stages:
       Apis:
         -
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+      AzureSearchSubscription: '$(AzureSubscription)'
+      IndexFile: "$(Pipeline.Workspace)/$(SolutionBaseName).Resources.AzureSearch/$(IndexFile)"
+      SearchName: '$(AzureSearchServiceName)'
+      SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
+
