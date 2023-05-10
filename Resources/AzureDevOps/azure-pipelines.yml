@@ -86,7 +86,7 @@ stages:
       Apis:
         -
           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
-      IndexFile: '$(IndexFile)'
+      IndexFile: "$(Pipeline.Workspace)/$(IndexFile)"
       SearchName: '$(AzureSearchServiceName)'
       SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
