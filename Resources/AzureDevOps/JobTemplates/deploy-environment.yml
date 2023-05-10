@@ -53,8 +53,8 @@ jobs:
           parameters: 
             AzureSubscription: '${{ parameters.AzureSubscription }}'
             IndexFile: '${{ parameters.IndexFile }}'
-            SearchName: '${{ parameters.AzureSearchServiceName }}'
-            SearchResourceGroupName: '${{ parameters.AzureSearchServiceResourceGroup }}'
+            SearchName: '${{ parameters.SearchName }}'
+            SearchResourceGroupName: '${{ parameters.SearchResourceGroupName }}'
             Location: '${{ parameters.Location }}'
 
 - ${{ each apiPartition in parameters.Apis }}:
