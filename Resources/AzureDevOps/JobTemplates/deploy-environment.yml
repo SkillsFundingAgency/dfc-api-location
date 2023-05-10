@@ -19,7 +19,7 @@ parameters:
   ApimApiName: ''
   Apis: []
   IndexFile: ''
-  AzureSearchSubscription: ''
+  SearchSubscription: ''
   SearchName: ''
   SearchResourceGroupName: ''
 
@@ -54,7 +54,7 @@ jobs:
         - script: "dir $(Pipeline.Workspace)"
         - template: /AzureDevOpsTemplates/Deploy/StepTemplates/dfc-searchindex-deploy.yml@dfc-devops
           parameters: 
-            AzureSubscription: '${{ parameters.AzureSearchSubscription }}'
+            AzureSubscription: '${{ parameters.SearchSubscription }}'
             IndexFile: '${{ parameters.IndexFile }}'
             SearchName: '${{ parameters.SearchName }}'
             SearchResourceGroupName: '${{ parameters.SearchResourceGroupName }}'
