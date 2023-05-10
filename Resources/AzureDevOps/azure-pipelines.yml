@@ -43,7 +43,7 @@ stages:
         ArmTemplateRoot: '${{ variables.ArmTemplateRoot }}'
         SolutionBaseName: '${{ variables.SolutionBaseName }}'
 
-- job: PackageSearchIndex
+  - job: PackageSearchIndex
     displayName: "Package Search Index"
     steps:
     - task: PublishBuildArtifacts@1
