@@ -19,7 +19,7 @@ parameters:
   ApimApiName: ''
   Apis: []
   IndexFile: ''
-  AzureSearchSubscription: '$(AzureSubscription)'
+  AzureSearchSubscription: '${{ parameters.AzureSubscription }}'
   SearchName: ''
   SearchResourceGroupName: ''
 
