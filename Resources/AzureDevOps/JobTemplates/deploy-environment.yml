@@ -50,6 +50,7 @@ jobs:
       deploy:
         steps:
         - checkout: dfc-devops
+        - script: "dir $(Pipeline.Workspace)"
         - template: /AzureDevOpsTemplates/Deploy/StepTemplates/dfc-searchindex-deploy.yml@dfc-devops
           parameters: 
             AzureSubscription: '${{ parameters.AzureSubscription }}'
