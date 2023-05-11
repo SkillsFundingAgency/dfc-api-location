@@ -10,7 +10,7 @@ resources:
   - repository: dfc-devops
     type: github
     name: SkillsFundingAgency/dfc-devops
-    ref: refs/heads/NCSLT-5461
+    ref: refs/tags/v1.11.2
     endpoint: 'GitHub (ESFA)'
 
 pool:
@@ -65,7 +65,7 @@ stages:
         TestSuffix: UnitTests
     
 - stage: DeployToDevApiLocation
-  # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: Deploy to DEV_ApiLocation
   variables:
   - template: VariableTemplates/DevEnvironmentVariables.yml
@@ -100,111 +100,111 @@ stages:
       SearchName: '$(AzureSearchServiceName)'
       SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
-# - stage: DeployToSitApiLocation
-#   condition: succeeded()
-#   displayName: Deploy to SIT_ApiLocation
-#   variables:
-#   - template: VariableTemplates/SitEnvironmentVariables.yml
-#   - group: dfc-shared-sit
-#   - group: dfc-app-shared-all
-#   - group: dfc-app-shared-sit
-#   - group: dfc-api-location
-#   - group: 'KeyVault - dfc-sit-shared-kv'
-#   jobs:
-#   - template: JobTemplates/deploy-environment.yml
-#     parameters:
-#       AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
-#       EnvironmentTag: '$(EnvironmentTag)'
-#       ParentBusiness: '$(ParentBusiness)'
-#       ServiceOffering: '$(ServiceOffering)'
-#       ResourceGroup: '$(ResourceGroup)'
-#       PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
-#       ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
-#       FunctionAppDomain: '$(FunctionAppDomain)'
-#       EnvironmentName: SIT_ApiLocation
-#       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
-#       ApimLoggerName: "$(ApimLoggerName)"
-#       ApimProductName: "$(ApimProductName)"
-#       SharedResourceGroup: "$(SharedResourceGroup)"
-#       ApimServiceName: "$(ApimServiceName)"
-#       ApimApiName: $(ApimApiName)
-#       Apis:
-#         -
-#           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
-#       AzureSearchSubscription: '$(AzureSearchSubscription)'
-#       IndexFile: "$(Pipeline.Workspace)/$(SolutionBaseName).Resources.AzureSearch/$(IndexFile)"
-#       SearchName: '$(AzureSearchServiceName)'
-#       SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
+- stage: DeployToSitApiLocation
+  condition: succeeded()
+  displayName: Deploy to SIT_ApiLocation
+  variables:
+  - template: VariableTemplates/SitEnvironmentVariables.yml
+  - group: dfc-shared-sit
+  - group: dfc-app-shared-all
+  - group: dfc-app-shared-sit
+  - group: dfc-api-location
+  - group: 'KeyVault - dfc-sit-shared-kv'
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      FunctionAppDomain: '$(FunctionAppDomain)'
+      EnvironmentName: SIT_ApiLocation
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      ApimLoggerName: "$(ApimLoggerName)"
+      ApimProductName: "$(ApimProductName)"
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      ApimServiceName: "$(ApimServiceName)"
+      ApimApiName: $(ApimApiName)
+      Apis:
+        -
+          - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+      SearchSubscription: 'Operations Support (fa36a013-6437-49f7-b274-b1e72970de7a)'
+      IndexFile: "$(Pipeline.Workspace)/$(SolutionBaseName).Resources.AzureSearch/$(IndexFile)"
+      SearchName: '$(AzureSearchServiceName)'
+      SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
-# - stage: DeployToPPApiLocation
-#   condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-#   displayName: Deploy to PP_ApiLocation
-#   variables:
-#   - group: dfc-shared-pp
-#   - group: dfc-app-shared-all
-#   - group: dfc-app-shared-pp
-#   - group: dfc-api-location
-#   - group: 'KeyVault - dfc-pp-shared-kv'
-#   - template: VariableTemplates/PPEnvironmentVariables.yml
-#   jobs:
-#   - template: JobTemplates/deploy-environment.yml
-#     parameters:
-#       AzureSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
-#       EnvironmentTag: '$(EnvironmentTag)'
-#       ParentBusiness: '$(ParentBusiness)'
-#       ServiceOffering: '$(ServiceOffering)'
-#       ResourceGroup: '$(ResourceGroup)'
-#       PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
-#       ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
-#       FunctionAppDomain: '$(FunctionAppDomain)'
-#       EnvironmentName: PP_ApiLocation
-#       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
-#       ApimLoggerName: "$(ApimLoggerName)"
-#       ApimProductName: "$(ApimProductName)"
-#       SharedResourceGroup: "$(SharedResourceGroup)"
-#       ApimServiceName: "$(ApimServiceName)"
-#       ApimApiName: $(ApimApiName)
-#       Apis:
-#         -
-#           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
-#       AzureSearchSubscription: '$(AzureSubscription)'
-#       IndexFile: "$(Pipeline.Workspace)/$(SolutionBaseName).Resources.AzureSearch/$(IndexFile)"
-#       SearchName: '$(AzureSearchServiceName)'
-#       SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
+- stage: DeployToPPApiLocation
+  condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  displayName: Deploy to PP_ApiLocation
+  variables:
+  - group: dfc-shared-pp
+  - group: dfc-app-shared-all
+  - group: dfc-app-shared-pp
+  - group: dfc-api-location
+  - group: 'KeyVault - dfc-pp-shared-kv'
+  - template: VariableTemplates/PPEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      FunctionAppDomain: '$(FunctionAppDomain)'
+      EnvironmentName: PP_ApiLocation
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      ApimLoggerName: "$(ApimLoggerName)"
+      ApimProductName: "$(ApimProductName)"
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      ApimServiceName: "$(ApimServiceName)"
+      ApimApiName: $(ApimApiName)
+      Apis:
+        -
+          - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+      SearchSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
+      IndexFile: "$(Pipeline.Workspace)/$(SolutionBaseName).Resources.AzureSearch/$(IndexFile)"
+      SearchName: '$(AzureSearchServiceName)'
+      SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
-# - stage: DeployToPRDApiLocation
-#   condition: and(eq(dependencies.DeployToPPApiLocation.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-#   displayName: Deploy to PRD_ApiLocation
-#   variables:
-#   - group: dfc-shared-prd
-#   - group: dfc-app-shared-all
-#   - group: dfc-app-shared-prd
-#   - group: dfc-api-location
-#   - group: 'KeyVault - dfc-prd-shared-kv'
-#   - template: VariableTemplates/PRDEnvironmentVariables.yml
-#   jobs:
-#   - template: JobTemplates/deploy-environment.yml
-#     parameters:
-#       AzureSubscription: 'SFA-DIG-Prod (6c93f7dc-6c36-4ea6-8de3-3f4574f88027)'
-#       EnvironmentTag: '$(EnvironmentTag)'
-#       ParentBusiness: '$(ParentBusiness)'
-#       ServiceOffering: '$(ServiceOffering)'
-#       ResourceGroup: '$(ResourceGroup)'
-#       PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
-#       ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
-#       FunctionAppDomain: '$(FunctionAppDomain)'
-#       EnvironmentName: PRD_ApiLocation
-#       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
-#       ApimLoggerName: "$(ApimLoggerName)"
-#       ApimProductName: "$(ApimProductName)"
-#       SharedResourceGroup: "$(SharedResourceGroup)"
-#       ApimServiceName: "$(ApimServiceName)"
-#       ApimApiName: $(ApimApiName)
-#       Apis:
-#         -
-#           - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
-#       AzureSearchSubscription: '$(AzureSubscription)'
-#       IndexFile: "$(Pipeline.Workspace)/$(SolutionBaseName).Resources.AzureSearch/$(IndexFile)"
-#       SearchName: '$(AzureSearchServiceName)'
-#       SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
+- stage: DeployToPRDApiLocation
+  condition: and(eq(dependencies.DeployToPPApiLocation.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  displayName: Deploy to PRD_ApiLocation
+  variables:
+  - group: dfc-shared-prd
+  - group: dfc-app-shared-all
+  - group: dfc-app-shared-prd
+  - group: dfc-api-location
+  - group: 'KeyVault - dfc-prd-shared-kv'
+  - template: VariableTemplates/PRDEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-DIG-Prod (6c93f7dc-6c36-4ea6-8de3-3f4574f88027)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      FunctionAppDomain: '$(FunctionAppDomain)'
+      EnvironmentName: PRD_ApiLocation
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      ApimLoggerName: "$(ApimLoggerName)"
+      ApimProductName: "$(ApimProductName)"
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      ApimServiceName: "$(ApimServiceName)"
+      ApimApiName: $(ApimApiName)
+      Apis:
+        -
+          - azureFunctionName: '${{ variables.WebAppPrefix }}-api-location-fa'
+      SearchSubscription: 'SFA-DIG-Prod (6c93f7dc-6c36-4ea6-8de3-3f4574f88027)'
+      IndexFile: "$(Pipeline.Workspace)/$(SolutionBaseName).Resources.AzureSearch/$(IndexFile)"
+      SearchName: '$(AzureSearchServiceName)'
+      SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
