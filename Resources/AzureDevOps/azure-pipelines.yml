@@ -60,12 +60,11 @@ stages:
         SolutionBaseName: $(SolutionBaseName)
         BuildPlatform: $(BuildPlatform)
         BuildConfiguration: $(BuildConfiguration)
-        DotNetCoreVersion: '3.1.100'
         PublishWebApp: true
         TestSuffix: UnitTests
     
 - stage: DeployToDevApiLocation
-  # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  condition: succeeded()
   displayName: Deploy to DEV_ApiLocation
   variables:
   - template: VariableTemplates/DevEnvironmentVariables.yml
@@ -137,7 +136,7 @@ stages:
       SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
 - stage: DeployToPPApiLocation
-  condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded()
   displayName: Deploy to PP_ApiLocation
   variables:
   - group: dfc-shared-pp
@@ -173,7 +172,7 @@ stages:
       SearchResourceGroupName: '$(AzureSearchServiceResourceGroup)'
 
 - stage: DeployToPRDApiLocation
-  condition: and(eq(dependencies.DeployToPPApiLocation.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded()
   displayName: Deploy to PRD_ApiLocation
   variables:
   - group: dfc-shared-prd
