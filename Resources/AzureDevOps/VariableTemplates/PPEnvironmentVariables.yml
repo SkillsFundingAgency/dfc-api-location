@@ -1,6 +1,6 @@
 variables:
 - name: aspInstances
-  value: 3
+  value: 2
 - name: aspSize
   value: 1
 - name: aspTier
